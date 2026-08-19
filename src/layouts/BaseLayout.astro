@@ -68,8 +68,12 @@ const allSchema = [organizationSchema, ...structuredData];
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   ))}
 
+  <!-- Real files at permanent URLs, matching the live site — Google
+       ignores data: URL favicons and shows the generic globe instead,
+       so these have to be actual files, not inline SVG. -->
   <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/gidsly-icon-512.png" />
+  <link rel="apple-touch-icon" href="/gidsly-apple-touch-icon.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
