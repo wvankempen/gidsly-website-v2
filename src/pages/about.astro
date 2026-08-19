@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'About Gidsly';
+const description = "Gidsly is built by one person who got tired of watching career decisions get made off a spreadsheet and a gut feeling. Here's why.";
+---
+<BaseLayout title={title} description={description} path="/about">
+  <Header />
+
+  <!--
+    FOUNDER NOTE — copy still needs Willem's own words per the rebuild
+    plan (Confluence §4): "One paragraph, one photo, converts more
+    than a features grid on a one-founder product." Photo is real
+    (public/images/willem.jpg).
+  -->
+  <section class="about-section">
+    <img class="about-photo" src="/images/willem.jpg" alt="Willem, founder of Gidsly" width="600" height="600" />
+
+    <div class="about-copy">
+      <h1>Why Gidsly exists.</h1>
+      <p>I built Gidsly because I kept watching people, myself included, make some of the biggest decisions of their working life off a spreadsheet, a gut feeling, and whatever advice happened to be in front of them. A job search is not just a process to get through. It's one of the most human things you'll do, and it deserved better tools than the ones I could find.</p>
+      <p>Gidsly is built to remember what you've done, understand what you actually want, and be honest with you about both, including on the days that are hard. Not a job board, not a recruiter, not a persona. A companion for the whole journey, built by someone in the Netherlands who's still building it.</p>
+      <p class="about-signoff">Willem, founder</p>
+    </div>
+  </section>
+
+  <section class="close-cta">
+    <h2 class="close-title">Come try it.</h2>
+    <p class="close-sub">Free to start. Premium at &euro;9.95 per month or &euro;99.50 per year when you're ready for more.</p>
+    <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">Create your account</a>
+    <p class="form-note">No credit card required. Cancel anytime.</p>
+  </section>
+
+  <Footer />
+</BaseLayout>

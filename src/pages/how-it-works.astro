@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'How Gidsly works: Journeys, Companion, and My Essence';
+const description = 'Track every application as a Journey, lean on the Companion for the harder days, and let My Essence, what Gidsly knows about you, get sharper every time you use it.';
+---
+<BaseLayout title={title} description={description} path="/how-it-works">
+  <Header />
+
+  <section class="how-hero">
+    <h1>One loop, the whole way through.</h1>
+    <p>Gidsly isn't a stack of separate tools. It's one loop: track the moment, lean on the Companion when it gets hard, and let what Gidsly knows about you get sharper every time.</p>
+  </section>
+
+  <section class="how-steps">
+    <!-- Step 1: Journeys -->
+    <div class="how-step">
+      <div class="how-step-copy">
+        <span class="how-step-num">01</span>
+        <h2>Every application, tracked as a Journey.</h2>
+        <p>Gidsly calls a career moment a Journey and tracks it end to end: stage, status history, and the follow-up that's about to go cold. Today that's your job applications. Nothing lives in a spreadsheet you forget to open.</p>
+      </div>
+      <div class="how-step-visual" aria-hidden="true">
+        <div class="panel-timeline">
+          <div class="panel-timeline-head">
+            <div class="app-avatar">O</div>
+            <div>
+              <div class="title">Head of Design &middot; Orbit Studios</div>
+              <div class="sub">Status history</div>
+            </div>
+          </div>
+          <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Researching</span><span class="tl-date">Mar 3</span></div>
+          <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Ready to Apply</span><span class="tl-date">Mar 10</span></div>
+          <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Applied</span><span class="tl-date">Mar 14</span></div>
+          <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Interviewing <span class="tl-current">Now</span></span><span class="tl-date">Apr 2</span></div>
+          <div class="tl-item upcoming"><span class="tl-dot upcoming"></span><span class="tl-label">Interview #2 scheduled</span><span class="tl-date">Apr 18</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Companion -->
+    <div class="how-step reverse">
+      <div class="how-step-copy">
+        <span class="how-step-num">02</span>
+        <h2>A companion for the parts no dashboard covers.</h2>
+        <p>Interview rehearsal when you're nervous. Reflection when you're stuck. A voice to lean on when the rejection comes, because it will, and that's normal. The Companion is the long-running conversation, not a one-off chatbot.</p>
+      </div>
+      <div class="how-step-visual" aria-hidden="true">
+        <div class="panel-chat">
+          <div class="chat-msg">
+            <div class="chat-avatar user">W</div>
+            <div class="chat-body">
+              <div class="chat-name">You &middot; Wednesday 14:32</div>
+              <div class="chat-text">Got a rejection from Orbit. Feels bad.</div>
+            </div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-avatar gidsly">G</div>
+            <div class="chat-body">
+              <div class="chat-name">Gidsly &middot; just now</div>
+              <div class="chat-text">That's hard, especially after reaching the final round. Want to talk through what happened, or would a two-minute reset help first? Either is a good choice.</div>
+              <div class="chat-voice">
+                <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+                <span>Voice reply available</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: My Essence -->
+    <div class="how-step">
+      <div class="how-step-copy">
+        <span class="how-step-num">03</span>
+        <h2>My Essence gets sharper every time.</h2>
+        <p>What you've done and what you actually want, kept in one place that outlives any single Journey. Every document Gidsly tailors, every question the Companion asks, feeds back into My Essence, so the next conversation starts smarter than the last.</p>
+      </div>
+      <div class="how-step-visual" aria-hidden="true">
+        <div class="panel-essence">
+          <div class="essence-head">
+            <div class="essence-avatar">S</div>
+            <div>
+              <div class="essence-name">Sanne de Vries</div>
+              <div class="essence-role">Product leader &middot; Amsterdam</div>
+            </div>
+          </div>
+          <div class="essence-section">
+            <p class="essence-section-label">Skills</p>
+            <div class="essence-chips">
+              <span class="essence-chip">Product strategy</span>
+              <span class="essence-chip">0&rarr;1</span>
+              <span class="essence-chip">B2B SaaS</span>
+            </div>
+          </div>
+          <div class="essence-section">
+            <p class="essence-section-label">What matters</p>
+            <p class="essence-note">Ownership, a small team that ships, and a mission worth the hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="close-cta">
+    <h2 class="close-title">See it for yourself.</h2>
+    <p class="close-sub">Free to start. Premium at &euro;9.95 per month or &euro;99.50 per year when you're ready for more.</p>
+    <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">Create your account</a>
+    <p class="form-note">No credit card required. Cancel anytime.</p>
+  </section>
+
+  <Footer />
+</BaseLayout>
