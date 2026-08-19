@@ -1,0 +1,60 @@
+---
+/**
+ * Shared shell for Privacy / Terms / Subprocessors.
+ *
+ * The live site fetched these from the gidsly-content repo's raw
+ * Markdown at RUNTIME, client-side, via a <script> tag — meaning
+ * Google's initial HTML response for these pages carried no actual
+ * content, exactly the "client-only rendering" the rebuild plan's
+ * SEO section (§5) says to avoid. This layout does the same fetch +
+ * parse, but at BUILD time, so the shipped HTML has the real content
+ * in it. Same single source of truth (gidsly-content), same ~5min
+ * propagation lag as before (a new deploy re-fetches), just rendered
+ * server-side instead of in the visitor's browser.
+ */
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { marked } from 'marked';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  path: string;
+  /** Filename in the gidsly-content repo, e.g. "privacy.md". */
+  sourceFile: string;
+}
+
+const { eyebrow, heading, description, path, sourceFile } = Astro.props;
+
+let bodyHtml: string;
+try {
+  const res = await fetch(`https://raw.githubusercontent.com/wvankempen/gidsly-content/main/${sourceFile}`);
+  if (!res.ok) throw new Error(`fetch failed: ${res.status}`);
+  const md = await res.text();
+  // Strip the leading H1 — the page-hero above already shows the title,
+  // matching the live site's exact behaviour. gidsly-content's files
+  // are CRLF (`\r\n`), and JS's `.` doesn't match `\r`, so a plain
+  // `\n+`-based strip silently no-ops and leaves the H1 in place —
+  // match on the [\r\n] character class instead so it works
+  // regardless of which line-ending style the source ends up using.
+  const body = md.replace(/^#[^\r\n]*[\r\n]+/, '');
+  bodyHtml = await marked.parse(body);
+} catch (err) {
+  // Build-time fetch failing shouldn't take the whole site down. Fall
+  // back to a pointer at the source repo, same message the live
+  // site's client-side catch block shows on a runtime fetch failure.
+  console.error(`[legal] failed to fetch ${sourceFile}:`, err);
+  bodyHtml = `<p>Could not load this content at build time. View the source on <a href="https://github.com/wvankempen/gidsly-content/blob/main/${sourceFile}">GitHub</a>.</p>`;
+}
+---
+<BaseLayout title={`${heading}: Gidsly`} description={description} path={path}>
+  <Header />
+  <header class="legal-hero">
+    <span class="legal-eyebrow">{eyebrow}</span>
+    <h1>{heading}</h1>
+  </header>
+  <article class="legal-article" set:html={bodyHtml} />
+  <Footer />
+</BaseLayout>

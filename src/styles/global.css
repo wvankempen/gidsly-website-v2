@@ -508,6 +508,72 @@ footer { border-top: 1px solid rgba(28, 69, 56, 0.08); padding: 2.5rem 0 3rem; c
   font-size: 1.15rem; color: var(--green-soft);
 }
 
+/* ── LEGAL pages (Privacy/Terms/Subprocessors) ──────────────────
+   Content is Markdown rendered to HTML at build time (see
+   src/layouts/LegalLayout.astro) from the gidsly-content repo, the
+   same source of truth the live site's client-side fetch used —
+   this just moves the render from the browser to build time. Prose
+   rules ported from the live site's own legal-page stylesheet. ──── */
+.legal-hero { padding: 2.5rem 0 1rem; }
+.legal-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green-soft); margin-bottom: 0.75rem;
+}
+.legal-hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900; letter-spacing: -0.02em; line-height: 1.05;
+  color: var(--green);
+}
+.legal-article { padding: 1rem 0 5rem; max-width: 780px; }
+.legal-article a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; font-weight: 500; }
+.legal-article a:hover { color: var(--green-dark); }
+.legal-article h1, .legal-article h2, .legal-article h3, .legal-article h4 {
+  font-family: 'Fraunces', serif;
+  color: var(--green); letter-spacing: -0.01em;
+}
+.legal-article h1 { font-size: 1.9rem; font-weight: 800; margin: 2.5rem 0 1rem; }
+.legal-article h2 { font-size: 1.45rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+.legal-article h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem; }
+.legal-article h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase; margin: 1.25rem 0 0.5rem;
+  color: var(--muted);
+}
+.legal-article p { margin: 0 0 1rem; font-size: 0.95rem; line-height: 1.7; }
+.legal-article ul, .legal-article ol { margin: 0 0 1rem 1.25rem; padding-left: 0.25rem; }
+.legal-article ul { list-style: disc; }
+.legal-article ol { list-style: decimal; }
+.legal-article li { margin-bottom: 0.35rem; font-size: 0.95rem; line-height: 1.7; }
+.legal-article li > p { margin: 0; }
+.legal-article strong { font-weight: 700; }
+.legal-article em { font-style: italic; }
+.legal-article hr { border: 0; border-top: 1px solid rgba(28, 69, 56, 0.1); margin: 2rem 0; }
+.legal-article code {
+  background: rgba(28, 69, 56, 0.05); padding: 0.1rem 0.35rem;
+  border-radius: 4px; font-size: 0.85em;
+  font-family: 'Menlo', 'Consolas', monospace;
+}
+.legal-article blockquote {
+  border-left: 3px solid rgba(28, 69, 56, 0.2);
+  padding: 0.25rem 1rem; margin: 1rem 0;
+  color: var(--muted); font-style: italic;
+}
+/* display:block + overflow-x:auto directly on <table> (same technique
+   GitHub's own Markdown CSS uses) lets a wide table (Subprocessors'
+   5-column vendor list) scroll horizontally on narrow screens instead
+   of squeezing unreadable or overflowing the page. The table's own
+   internal row/cell layout is unaffected. */
+.legal-article table { display: block; width: max-content; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+.legal-article th, .legal-article td {
+  border: 1px solid rgba(28, 69, 56, 0.1);
+  padding: 0.5rem 0.75rem; text-align: left; vertical-align: top;
+}
+.legal-article th { background: rgba(28, 69, 56, 0.04); font-weight: 700; }
+
 /* ── PRICING page ────────────────────────────────────────────── */
 .pricing-hero { text-align: center; padding: 2.5rem 0 1rem; }
 .pricing-hero h1 {
