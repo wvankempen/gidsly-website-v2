@@ -1,17 +1,117 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
+const title = "Gidsly: the career companion you wish you'd had.";
+const description = "Gidsly keeps every application, interview, and career decision in one place, with honest coaching for the moments that aren't on a spreadsheet.";
 ---
+<BaseLayout title={title} description={description} path="/">
+  <Header />
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  <!-- HERO ────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>The career companion<br>you <em>wish</em><br>you'd had.</h1>
+        <p class="hero-sub">
+          Gidsly keeps every application, interview, and career decision in one place, with honest coaching for the moments that aren't on a spreadsheet.
+        </p>
+        <div class="hero-cta">
+          <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">Start free</a>
+          <a href="/pricing" class="btn-ghost">See pricing &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Stylised Applications page. Pure HTML/CSS, nothing loaded
+           from the actual app. Three sample rows convey "this tracks
+           your job search" at a glance. -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="app-preview">
+          <div class="app-preview-chrome">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="app-preview-body">
+            <div class="app-preview-head">
+              <h4>Applications</h4>
+              <span>3 active</span>
+            </div>
+            <div class="app-row">
+              <div class="app-avatar">P</div>
+              <div class="app-info">
+                <div class="app-role">Senior Product Manager</div>
+                <div class="app-co">Pulse Fintech &middot; Amsterdam</div>
+              </div>
+              <span class="app-stage stage-discovery">Researching</span>
+            </div>
+            <div class="app-row">
+              <div class="app-avatar">O</div>
+              <div class="app-info">
+                <div class="app-role">Head of Design</div>
+                <div class="app-co">Orbit Studios &middot; Utrecht</div>
+              </div>
+              <span class="app-stage stage-interview">Interviewing</span>
+            </div>
+            <div class="app-row">
+              <div class="app-avatar">L</div>
+              <div class="app-info">
+                <div class="app-role">Staff Engineer</div>
+                <div class="app-co">Lumen Health &middot; Remote</div>
+              </div>
+              <span class="app-stage stage-offer">Offer Received</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES ────────────────────────────────────────────── -->
+  <section class="features" id="features">
+    <p class="section-eyebrow">What Gidsly does</p>
+    <h2 class="section-title">Built for the whole journey.</h2>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="7" width="5" height="14" rx="1"/><rect x="17" y="11" width="4" height="10" rx="1"/></svg></div>
+        <h3 class="feat-title">A pipeline that doesn't forget.</h3>
+        <p class="feat-desc">Every application, conversation, and next step in one view. Every stage change is an event you can look back on, not just a number on a dashboard.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9.5 12.5l1.5 1.5 3-3"/></svg></div>
+        <h3 class="feat-title">Documents that land.</h3>
+        <p class="feat-desc">CVs, cover letters, and pitches, tailored for every role you pursue. Gidsly reads the job description and draws on your real experience, always in your voice.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h3 class="feat-title">A companion for the harder days.</h3>
+        <p class="feat-desc">Interview rehearsal when you're nervous, reflection when you're stuck, and a voice to lean on when the rejection comes, because it will, and that's normal.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+        <h3 class="feat-title">A network that remembers.</h3>
+        <p class="feat-desc">Contacts and stakeholders linked to the roles they actually touch. Recruiters, hiring managers, warm intros, all surfaced when the right moment comes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY — warm band, no fake attribution ───────────────── -->
+  <div class="why">
+    <div class="why-inner">
+      <div class="why-eyebrow">Why Gidsly exists</div>
+      <p class="why-text">
+        A job search isn't just a process. It's one of the most human things you'll ever do.
+        <strong>We built Gidsly with that in mind.</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- CLOSING CTA ─────────────────────────────────────────── -->
+  <section class="close-cta">
+    <h2 class="close-title">Ready to try Gidsly?</h2>
+    <p class="close-sub">Free to start. Premium at &euro;9.95 per month or &euro;99.50 per year when you're ready for more.</p>
+    <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">Create your account</a>
+    <p class="form-note">No credit card required. Cancel anytime.</p>
+  </section>
+
+  <Footer />
+</BaseLayout>

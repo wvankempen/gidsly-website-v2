@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PricingCard from '../components/PricingCard.astro';
+
+const title = 'Pricing: Gidsly';
+const description = "Basic is free: up to 2 active Journeys and light Companion access. Premium is €9.95 a month or €99.50 a year for unlimited Journeys and the full Companion.";
+
+// Plan data sourced from the app's own billing config (services/billing.ts,
+// public/locales/en/billing.json in the main Gidsly repo) — the
+// authoritative source, not re-typed from memory.
+const faqs = [
+  {
+    q: 'Can I cancel anytime?',
+    a: "Yes. Cancel whenever you like and you'll keep Premium until the end of your current billing period. No cancellation fee, no retention maze.",
+  },
+  {
+    q: "What happens if I'm already past 2 active Journeys on Basic?",
+    a: "You'll still see every Journey you have. Basic just pauses the extras beyond 2 active ones until you either free up a slot or upgrade to Premium.",
+  },
+  {
+    q: 'How much do I save paying yearly?',
+    a: 'The annual plan is €99.50 a year, which works out to about 2 months free compared to paying €9.95 every month.',
+  },
+  {
+    q: 'Is there a free trial on Premium?',
+    a: 'Basic itself is free and has no time limit, so you can try Gidsly for as long as you like before deciding whether Premium is worth it for you.',
+  },
+  {
+    q: 'What happens to my data?',
+    a: "Your Essence, the career profile Gidsly builds with you, is never sold and never shared with anyone. It's yours whether you're on Basic or Premium.",
+  },
+  {
+    q: 'Can I switch between plans later?',
+    a: 'Yes, upgrade or downgrade from Account Settings whenever your situation changes. Downgrading from Premium keeps your data intact.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Gidsly',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  offers: [
+    { '@type': 'Offer', name: 'Basic', price: '0', priceCurrency: 'EUR' },
+    { '@type': 'Offer', name: 'Premium (monthly)', price: '9.95', priceCurrency: 'EUR' },
+    { '@type': 'Offer', name: 'Premium (annual)', price: '99.50', priceCurrency: 'EUR' },
+  ],
+};
+---
+<BaseLayout title={title} description={description} path="/pricing" structuredData={[productSchema, faqSchema]}>
+  <Header />
+
+  <section class="pricing-hero">
+    <h1>Simple pricing, no surprises.</h1>
+    <p>Start free. Upgrade whenever the 2-Journey cap starts to feel like a wall, not before.</p>
+  </section>
+
+  <div class="pricing-cards">
+    <PricingCard
+      name="Basic"
+      amount="Free"
+      note="The free starter tier. Access to Gidsly's core functionality."
+      features={[
+        'Up to 2 active Journeys',
+        'Light Companion access',
+        'Up to 10 saved documents',
+      ]}
+      ctaLabel="Start free"
+    />
+    <PricingCard
+      name="Premium"
+      amount="€9.95"
+      unit="/ month"
+      note="€99.50 / year, about 2 months free"
+      featured
+      badge="Full access"
+      features={[
+        'Unlimited active Journeys',
+        'Full Companion with deep actions',
+        'Unlimited documents',
+        'Calendar and email integration',
+        'Wellness module',
+      ]}
+      ctaLabel="Start Premium"
+    />
+  </div>
+
+  <section class="pricing-faq">
+    <p class="section-eyebrow">Questions</p>
+    <h2 class="section-title">Before you decide.</h2>
+    {faqs.map((faq) => (
+      <div class="faq-item">
+        <p class="faq-q">{faq.q}</p>
+        <p class="faq-a">{faq.a}</p>
+      </div>
+    ))}
+  </section>
+
+  <Footer />
+</BaseLayout>

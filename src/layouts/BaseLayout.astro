@@ -1,0 +1,86 @@
+---
+/**
+ * BaseLayout — shared <head> + font loading + global.css for every page.
+ *
+ * Every page hand-writes its own title/description (no templated
+ * boilerplate, per the rebuild plan §5) and passes it in as props.
+ * `structuredData` accepts one or more JSON-LD objects so a page can
+ * add its own schema (Product/FAQPage on Pricing, Article on future
+ * blog posts) on top of the Organization schema every page carries.
+ */
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Canonical + OG url, absolute, no trailing content beyond the path. */
+  path: string;
+  /** Extra JSON-LD objects beyond the Organization schema every page gets. */
+  structuredData?: object[];
+}
+
+const { title, description, path, structuredData = [] } = Astro.props;
+const canonicalUrl = `https://gidsly.com${path}`;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Gidsly',
+  legalName: 'Van Kempen Ventures and Consultancy',
+  url: 'https://gidsly.com/',
+  logo: 'https://gidsly.com/gidsly-icon-512.png',
+  description: "Gidsly keeps every application, interview, and career decision in one place, with honest coaching for the moments that aren't on a spreadsheet.",
+  sameAs: [
+    'https://www.linkedin.com/company/gidsly',
+    'https://www.instagram.com/gidsly/',
+  ],
+};
+
+const allSchema = [organizationSchema, ...structuredData];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <!-- Canonical: apex gidsly.com (not www), absolute + consistent so
+       Google sees one entity per URL. -->
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- Open Graph / social share -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content="https://gidsly.com/gidsly-og-banner.png" />
+  <meta property="og:image:alt" content="Gidsly, your AI career companion." />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:site_name" content="Gidsly" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://gidsly.com/gidsly-og-banner.png" />
+
+  {allSchema.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Three faces: Fraunces for editorial headlines, Inter for body
+       copy (matches the app), Libre Baskerville Bold for the single
+       "G" in the brand mark (matches GidslyLogo.tsx in the app repo). -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="wrapper">
+    <slot />
+  </div>
+</body>
+</html>

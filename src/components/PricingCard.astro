@@ -1,0 +1,39 @@
+---
+/**
+ * One plan card (Basic | Premium). Two cards only on the Pricing page,
+ * per the rebuild plan's resolved decision (Confluence §8) — no third
+ * Friends-of-Gidsly card, that tier stays invite-only.
+ */
+interface Props {
+  name: string;
+  amount: string;
+  unit?: string;
+  note?: string;
+  features: string[];
+  featured?: boolean;
+  badge?: string;
+  ctaLabel: string;
+}
+
+const { name, amount, unit, note, features, featured = false, badge, ctaLabel } = Astro.props;
+---
+<div class={`price-card ${featured ? 'featured' : ''}`}>
+  {badge && <span class="price-card-badge">{badge}</span>}
+  <p class="price-card-name">{name}</p>
+  <div class="price-card-amount">
+    <span class="num">{amount}</span>
+    {unit && <span class="unit">{unit}</span>}
+  </div>
+  {note && <p class="price-card-note">{note}</p>}
+  <ul class="price-card-features">
+    {features.map((feature) => (
+      <li>
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>{feature}</span>
+      </li>
+    ))}
+  </ul>
+  <a href="https://app.gidsly.com/#/auth/create-account" class={featured ? 'btn-primary' : 'btn-outline'}>
+    {ctaLabel}
+  </a>
+</div>
