@@ -1,0 +1,92 @@
+---
+/**
+ * Contact section — ported from the live site's Home page, ready to
+ * ship for the cutover (was deliberately deferred out of Phase 1 for
+ * scope; restored now that a real, unbroken contact path is a
+ * cutover blocker, not a nice-to-have).
+ *
+ * Posts to /api/contact (functions/api/contact.js, already ported
+ * byte-identical in Phase 1) which upserts the sender into Brevo and
+ * emails the team. Honeypot field silently drops bot submissions on
+ * the function side.
+ */
+---
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-copy">
+      <h3>Get in touch.</h3>
+      <p>Questions, feedback, or want to partner with us? Drop us a line and we'll come back to you personally.</p>
+    </div>
+
+    <div>
+      <form class="contact-form" id="contactForm" name="contact" method="POST">
+        <p style="display:none">
+          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+
+        <div class="contact-field">
+          <label for="contactName">Name <span class="optional">(optional)</span></label>
+          <input type="text" id="contactName" name="name" placeholder="Jane Smith" autocomplete="name" />
+        </div>
+
+        <div class="contact-field">
+          <label for="contactEmail">Email</label>
+          <input type="email" id="contactEmail" name="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+
+        <div class="contact-field">
+          <label for="contactMessage">Message</label>
+          <textarea id="contactMessage" name="message" placeholder="Tell us what's on your mind&hellip;" required></textarea>
+        </div>
+
+        <button type="submit" class="contact-submit" id="contactSubmit">Send message</button>
+      </form>
+
+      <div class="contact-success" id="contactSuccess">
+        <div class="success-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="success-title">Thanks, we've got it.</div>
+        <p class="success-sub">We'll reply to you personally, usually within a day or two.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Same behaviour as the live site: the fetch failing (e.g. a 404
+  // against a local static server with no /api/contact Function) is
+  // swallowed and the UI still shows success, since production is
+  // where this actually has to work.
+  const contactForm    = document.getElementById('contactForm') as HTMLFormElement | null;
+  const contactSubmit  = document.getElementById('contactSubmit') as HTMLButtonElement | null;
+  const contactSuccess = document.getElementById('contactSuccess');
+
+  if (contactForm && contactSubmit && contactSuccess) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      contactSubmit.disabled = true;
+      contactSubmit.textContent = 'Sending…';
+
+      const data = new FormData(contactForm);
+      const payload = {
+        name:        data.get('name')      || '',
+        email:       data.get('email')     || '',
+        message:     data.get('message')   || '',
+        'bot-field': data.get('bot-field') || '',
+      };
+      try {
+        await fetch('/api/contact', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload),
+        });
+      } catch (_err) {
+        // Silent — matches the live site's documented behaviour.
+      } finally {
+        contactForm.style.display   = 'none';
+        contactSuccess.style.display = 'block';
+      }
+    });
+  }
+</script>
