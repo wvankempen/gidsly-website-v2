@@ -28,7 +28,7 @@ const organizationSchema = {
   name: 'Gidsly',
   legalName: 'Van Kempen Ventures and Consultancy',
   url: 'https://gidsly.com/',
-  logo: 'https://gidsly.com/gidsly-icon-512.png',
+  logo: 'https://gidsly.com/brand/icons/gidsly-favicon-512.png',
   description: "Gidsly keeps every application, interview, and career decision in one place, with honest coaching for the moments that aren't on a spreadsheet.",
   sameAs: [
     'https://www.linkedin.com/company/gidsly',
@@ -68,12 +68,16 @@ const allSchema = [organizationSchema, ...structuredData];
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   ))}
 
-  <!-- Real files at permanent URLs, matching the live site — Google
-       ignores data: URL favicons and shows the generic globe instead,
-       so these have to be actual files, not inline SVG. -->
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/gidsly-icon-512.png" />
-  <link rel="apple-touch-icon" href="/gidsly-apple-touch-icon.png" />
+  <!-- Same icon set + manifest as the app (public/brand/icons in the
+       Gidsly app repo), not the marketing site's older one-off files —
+       one brand asset source, not two drifting sets. -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/brand/icons/gidsly-favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/brand/icons/gidsly-favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/brand/icons/gidsly-favicon-48.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/brand/icons/gidsly-favicon-192.png" />
+  <link rel="shortcut icon" href="/brand/icons/gidsly-favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/brand/icons/gidsly-apple-touch-icon-180.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

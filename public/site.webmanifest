@@ -1,0 +1,12 @@
+{
+  "name": "Gidsly",
+  "short_name": "Gidsly",
+  "theme_color": "#1c4538",
+  "background_color": "#fbf9f4",
+  "display": "standalone",
+  "icons": [
+    { "src": "/brand/icons/gidsly-favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/brand/icons/gidsly-favicon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/brand/icons/gidsly-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
