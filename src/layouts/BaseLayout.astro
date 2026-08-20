@@ -29,7 +29,11 @@ const organizationSchema = {
   legalName: 'Van Kempen Ventures and Consultancy',
   url: 'https://gidsly.com/',
   logo: 'https://gidsly.com/brand/icons/gidsly-favicon-512.png',
-  description: "Gidsly keeps every application, interview, and career decision in one place, with honest coaching for the moments that aren't on a spreadsheet.",
+  // Reuse the page's own description rather than a second, independent
+  // copy of similar-but-not-identical text — the two had drifted
+  // (this one still said "application" after the canon-alignment pass;
+  // see docs/gidsly-canon.md).
+  description,
   sameAs: [
     'https://www.linkedin.com/company/gidsly',
     'https://www.instagram.com/gidsly/',
@@ -55,7 +59,7 @@ const allSchema = [organizationSchema, ...structuredData];
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content="https://gidsly.com/gidsly-og-banner.png" />
-  <meta property="og:image:alt" content="Gidsly, your AI career companion." />
+  <meta property="og:image:alt" content="Gidsly, your career companion." />
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:site_name" content="Gidsly" />
 

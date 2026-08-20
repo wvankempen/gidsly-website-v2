@@ -4,7 +4,13 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 const title = "Gidsly: the career companion you wish you'd had.";
-const description = "Gidsly keeps every application, interview, and career decision in one place, with honest coaching for the moments that aren't on a spreadsheet.";
+// Derived straight from canon section 1 ("gets better at helping them
+// every time, because what it learns about them persists"), not
+// "keeps every application... in one place" -- that framed the core
+// unit as "application" (canon section 7 bans this; the word is
+// "Journey") and failed the substitution test (swap "Gidsly" for
+// "a CV tool" and it still read fine -- exactly what section 8 flags).
+const description = "Gidsly is the career companion that gets better at helping you every time, because what it learns about you persists.";
 ---
 <BaseLayout title={title} description={description} path="/">
   <Header />
@@ -15,7 +21,7 @@ const description = "Gidsly keeps every application, interview, and career decis
       <div class="hero-copy">
         <h1>The career companion<br>you <em>wish</em><br>you'd had.</h1>
         <p class="hero-sub">
-          Gidsly keeps every application, interview, and career decision in one place, with honest coaching for the moments that aren't on a spreadsheet.
+          {description} Honest coaching for the moments that aren't on a spreadsheet.
         </p>
         <div class="hero-cta">
           <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">Start free</a>
@@ -23,9 +29,10 @@ const description = "Gidsly keeps every application, interview, and career decis
         </div>
       </div>
 
-      <!-- Stylised Applications page. Pure HTML/CSS, nothing loaded
+      <!-- Stylised Journeys page. Pure HTML/CSS, nothing loaded
            from the actual app. Three sample rows convey "this tracks
-           your job search" at a glance. -->
+           every Journey" at a glance -- matches the app's own naming,
+           not the older "Applications" label the mockup used before. -->
       <div class="hero-visual" aria-hidden="true">
         <div class="app-preview">
           <div class="app-preview-chrome">
@@ -33,7 +40,7 @@ const description = "Gidsly keeps every application, interview, and career decis
           </div>
           <div class="app-preview-body">
             <div class="app-preview-head">
-              <h4>Applications</h4>
+              <h4>Journeys</h4>
               <span>3 active</span>
             </div>
             <div class="app-row">
@@ -69,12 +76,12 @@ const description = "Gidsly keeps every application, interview, and career decis
   <!-- FEATURES ────────────────────────────────────────────── -->
   <section class="features" id="features">
     <p class="section-eyebrow">What Gidsly does</p>
-    <h2 class="section-title">Built for the whole journey.</h2>
+    <h2 class="section-title">Built for the whole Journey.</h2>
     <div class="feat-grid">
       <div class="feat-card">
         <div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="7" width="5" height="14" rx="1"/><rect x="17" y="11" width="4" height="10" rx="1"/></svg></div>
         <h3 class="feat-title">A pipeline that doesn't forget.</h3>
-        <p class="feat-desc">Every application, conversation, and next step in one view. Every stage change is an event you can look back on, not just a number on a dashboard.</p>
+        <p class="feat-desc">Every Journey, conversation, and next step in one view. Every stage change is an event you can look back on, not just a number on a dashboard.</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9.5 12.5l1.5 1.5 3-3"/></svg></div>
@@ -99,7 +106,7 @@ const description = "Gidsly keeps every application, interview, and career decis
     <div class="why-inner">
       <div class="why-eyebrow">Why Gidsly exists</div>
       <p class="why-text">
-        A job search isn't just a process. It's one of the most human things you'll ever do.
+        A career decision isn't just a process. It's one of the most human things you'll ever do.
         <strong>We built Gidsly with that in mind.</strong>
       </p>
     </div>
