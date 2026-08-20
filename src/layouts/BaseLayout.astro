@@ -17,10 +17,19 @@ interface Props {
   path: string;
   /** Extra JSON-LD objects beyond the Organization schema every page gets. */
   structuredData?: object[];
+  locale?: 'en' | 'nl';
+  /** False for the legal pages -- no /nl/ counterpart exists yet. */
+  hasAltLocale?: boolean;
 }
 
-const { title, description, path, structuredData = [] } = Astro.props;
+const { title, description, path, structuredData = [], locale = 'en', hasAltLocale = true } = Astro.props;
 const canonicalUrl = `https://gidsly.com${path}`;
+
+// path is always the page's own locale-specific canonical path (e.g. "/pricing"
+// for EN, "/nl/pricing" for NL). Derive the other locale's URL by toggling the
+// /nl prefix, so hreflang always points at a real, matching page.
+const enPath = locale === 'nl' ? (path === '/nl' ? '/' : path.replace(/^\/nl/, '')) : path;
+const nlPath = locale === 'en' ? (path === '/' ? '/nl' : `/nl${path}`) : path;
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -43,7 +52,7 @@ const organizationSchema = {
 const allSchema = [organizationSchema, ...structuredData];
 ---
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,6 +62,14 @@ const allSchema = [organizationSchema, ...structuredData];
   <!-- Canonical: apex gidsly.com (not www), absolute + consistent so
        Google sees one entity per URL. -->
   <link rel="canonical" href={canonicalUrl} />
+
+  {hasAltLocale && (
+    <>
+      <link rel="alternate" hreflang="en" href={`https://gidsly.com${enPath}`} />
+      <link rel="alternate" hreflang="nl" href={`https://gidsly.com${nlPath}`} />
+      <link rel="alternate" hreflang="x-default" href={`https://gidsly.com${enPath}`} />
+    </>
+  )}
 
   <!-- Open Graph / social share -->
   <meta property="og:type" content="website" />

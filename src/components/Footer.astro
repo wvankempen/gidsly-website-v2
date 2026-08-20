@@ -1,9 +1,16 @@
 ---
-// Legal links point at /privacy, /terms, /subprocessors — those routes
-// don't exist in this repo yet (Phase 3 migrates them from Gidsly-site
-// at identical URLs). Linking them now is intentional: the footer is
-// the one component every page shares, and 404s until Phase 3 lands
-// are more honest than omitting the links and re-adding them later.
+// Legal links point at /privacy, /terms, /subprocessors — those pages
+// stay English-only in both locales (source Markdown has no Dutch
+// version yet), so the hrefs never get an /nl/ prefix. Only the visible
+// labels localize.
+import { copy, type Locale } from '../i18n/copy';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = copy[locale].footer;
 const year = new Date().getFullYear();
 ---
 <footer>
@@ -30,15 +37,15 @@ const year = new Date().getFullYear();
         </a>
       </div>
       <div class="footer-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-        <a href="https://gidsly.hyperping.app" target="_blank" rel="noopener noreferrer">Status</a>
-        <a href="/subprocessors">Subprocessors</a>
+        <a href="/privacy">{t.privacy}</a>
+        <a href="/terms">{t.terms}</a>
+        <a href="https://gidsly.hyperping.app" target="_blank" rel="noopener noreferrer">{t.status}</a>
+        <a href="/subprocessors">{t.subprocessors}</a>
         <span>&copy; {year} Gidsly</span>
       </div>
     </div>
   </div>
   <div class="footer-bottom-row">
-    <p class="footer-note">Being built in the Netherlands &middot; EU-first by design.</p>
+    <p class="footer-note">{t.note}</p>
   </div>
 </footer>

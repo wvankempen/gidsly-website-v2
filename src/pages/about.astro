@@ -3,37 +3,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ContactForm from '../components/ContactForm.astro';
+import { copy, type Locale } from '../i18n/copy';
 
-const title = 'About Gidsly';
-const description = "Gidsly is built by one person who got tired of watching career decisions get made off a spreadsheet and a gut feeling. Here's why.";
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = copy[locale].about;
+const cc = copy[locale].closeCta;
+const path = locale === 'nl' ? '/nl/about' : '/about';
 ---
-<BaseLayout title={title} description={description} path="/about">
-  <Header />
+<BaseLayout title={t.title} description={t.description} path={path} locale={locale}>
+  <Header locale={locale} basePath="/about" />
 
   <!--
-    FOUNDER NOTE — both paragraphs are Willem's own words now.
-    Photo is real (public/images/willem.jpg).
+    FOUNDER NOTE — Willem's own words, translated faithfully for the
+    Dutch version, not rewritten. Photo is real (public/images/willem.jpg).
   -->
   <section class="about-section">
     <img class="about-photo" src="/images/willem.jpg" alt="Willem, founder of Gidsly" width="600" height="600" />
 
     <div class="about-copy">
-      <h1>Why Gidsly exists.</h1>
-      <p>Gidsly exists because I kept watching people, myself included, make some of the biggest decisions of their working life off a spreadsheet, a gut feeling, and whatever advice happened to be in front of them. Yes, you talk to friends and family to collect advice or spar about an upcoming change or opportunity, but in the end it all comes down to you and you alone. And that is tough. A career decision is not just a process to get through. It's one of the most human things you'll do, and it deserves better tools and support.</p>
-      <p>There are great tools out there, but they're either very expensive or only available if you actually have a job and your employer sponsors it. And there are a lot of tools that don't really feel like they're focused on me and what's best for me and my career. Gidsly is built to fix this.</p>
-      <p>By interacting with Gidsly like a true companion, it will deeply understand who you are and remember what you've done, understand what you actually want, and what you don't. It isn't only about your CV but more so about who you are as a human. What makes you tick or what switches you off. Gidsly helps you to understand this and be honest about it. Gidsly is there, including on the days that are harder. It's not a job board, not a recruiter, not a persona. Gidsly is a companion that sticks with you throughout the whole Journey, built in the Netherlands for all of us and getting better by the day.</p>
-      <p class="about-signoff">Willem, founder</p>
+      <h1>{t.heading}</h1>
+      {t.paragraphs.map((p) => <p>{p}</p>)}
+      <p class="about-signoff">{t.signoff}</p>
     </div>
   </section>
 
   <section class="close-cta">
-    <h2 class="close-title">Come try it.</h2>
-    <p class="close-sub">Free to start. Premium at &euro;9.95 per month or &euro;99.50 per year when you're ready for more.</p>
-    <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">Create your account</a>
-    <p class="form-note">No credit card required. Cancel anytime.</p>
+    <h2 class="close-title">{t.closeTitle}</h2>
+    <p class="close-sub">{cc.sub}</p>
+    <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">{cc.cta}</a>
+    <p class="form-note">{cc.note}</p>
   </section>
 
-  <ContactForm />
+  <ContactForm locale={locale} />
 
-  <Footer />
+  <Footer locale={locale} />
 </BaseLayout>

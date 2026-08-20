@@ -10,44 +10,52 @@
  * emails the team. Honeypot field silently drops bot submissions on
  * the function side.
  */
+import { copy, type Locale } from '../i18n/copy';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = copy[locale].contact;
 ---
 <section class="contact-section" id="contact">
   <div class="contact-inner">
     <div class="contact-copy">
-      <h3>Get in touch.</h3>
-      <p>Questions, feedback, or want to partner with us? Drop us a line and we'll come back to you personally.</p>
+      <h3>{t.title}</h3>
+      <p>{t.body}</p>
     </div>
 
     <div>
       <form class="contact-form" id="contactForm" name="contact" method="POST">
         <p style="display:none">
-          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+          <label>{t.honeypotLabel} <input name="bot-field" /></label>
         </p>
 
         <div class="contact-field">
-          <label for="contactName">Name <span class="optional">(optional)</span></label>
-          <input type="text" id="contactName" name="name" placeholder="Jane Smith" autocomplete="name" />
+          <label for="contactName">{t.nameLabel} <span class="optional">{t.nameOptional}</span></label>
+          <input type="text" id="contactName" name="name" placeholder={t.namePlaceholder} autocomplete="name" />
         </div>
 
         <div class="contact-field">
-          <label for="contactEmail">Email</label>
-          <input type="email" id="contactEmail" name="email" placeholder="you@example.com" autocomplete="email" required />
+          <label for="contactEmail">{t.emailLabel}</label>
+          <input type="email" id="contactEmail" name="email" placeholder={t.emailPlaceholder} autocomplete="email" required />
         </div>
 
         <div class="contact-field">
-          <label for="contactMessage">Message</label>
-          <textarea id="contactMessage" name="message" placeholder="Tell us what's on your mind&hellip;" required></textarea>
+          <label for="contactMessage">{t.messageLabel}</label>
+          <textarea id="contactMessage" name="message" placeholder={t.messagePlaceholder} required></textarea>
         </div>
 
-        <button type="submit" class="contact-submit" id="contactSubmit">Send message</button>
+        <button type="submit" class="contact-submit" id="contactSubmit" data-sending-label={t.sending}>{t.submit}</button>
       </form>
 
       <div class="contact-success" id="contactSuccess">
         <div class="success-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <div class="success-title">Thanks, we've got it.</div>
-        <p class="success-sub">We'll reply to you personally, usually within a day or two.</p>
+        <div class="success-title">{t.successTitle}</div>
+        <p class="success-sub">{t.successBody}</p>
       </div>
     </div>
   </div>
@@ -66,7 +74,7 @@
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       contactSubmit.disabled = true;
-      contactSubmit.textContent = 'Sending…';
+      contactSubmit.textContent = contactSubmit.dataset.sendingLabel || 'Sending…';
 
       const data = new FormData(contactForm);
       const payload = {

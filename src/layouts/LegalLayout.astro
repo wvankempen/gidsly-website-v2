@@ -49,8 +49,8 @@ try {
   bodyHtml = `<p>Could not load this content at build time. View the source on <a href="https://github.com/wvankempen/gidsly-content/blob/main/${sourceFile}">GitHub</a>.</p>`;
 }
 ---
-<BaseLayout title={`${heading}: Gidsly`} description={description} path={path}>
-  <Header />
+<BaseLayout title={`${heading}: Gidsly`} description={description} path={path} hasAltLocale={false}>
+  <Header showLangSwitch={false} />
   <header class="legal-hero">
     <span class="legal-eyebrow">{eyebrow}</span>
     <h1>{heading}</h1>

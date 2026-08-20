@@ -2,18 +2,25 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { copy, type Locale } from '../i18n/copy';
 
-const title = "Gidsly: the career companion you wish you'd had.";
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = copy[locale].home;
+const cc = copy[locale].closeCta;
+const path = locale === 'nl' ? '/nl' : '/';
+
 // Derived straight from canon section 1 ("gets better at helping them
-// every time, because what it learns about them persists"), not
-// "keeps every application... in one place" -- that framed the core
-// unit as "application" (canon section 7 bans this; the word is
-// "Journey") and failed the substitution test (swap "Gidsly" for
-// "a CV tool" and it still read fine -- exactly what section 8 flags).
-const description = "Gidsly is the career companion that gets better at helping you every time, because what it learns about you persists.";
+// every time, because what it learns about them persists"). The hero
+// H1 tagline itself stays English in both locales -- same precedent
+// as the app's own nl/common.json, which keeps "Your Personal Career
+// Companion" in English rather than translating it.
 ---
-<BaseLayout title={title} description={description} path="/">
-  <Header />
+<BaseLayout title={t.title} description={t.description} path={path} locale={locale}>
+  <Header locale={locale} basePath="/" />
 
   <!-- HERO ────────────────────────────────────────────────── -->
   <section class="hero">
@@ -21,18 +28,19 @@ const description = "Gidsly is the career companion that gets better at helping 
       <div class="hero-copy">
         <h1>The career companion<br>you <em>wish</em><br>you'd had.</h1>
         <p class="hero-sub">
-          {description} Honest coaching for the moments that aren't on a spreadsheet.
+          {t.description} {t.heroSubExtra}
         </p>
         <div class="hero-cta">
-          <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">Start free</a>
-          <a href="/pricing" class="btn-ghost">See pricing &rarr;</a>
+          <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">{t.ctaPrimary}</a>
+          <a href={locale === 'nl' ? '/nl/pricing' : '/pricing'} class="btn-ghost">{t.ctaSecondary}</a>
         </div>
       </div>
 
       <!-- Stylised Journeys page. Pure HTML/CSS, nothing loaded
            from the actual app. Three sample rows convey "this tracks
-           every Journey" at a glance -- matches the app's own naming,
-           not the older "Applications" label the mockup used before. -->
+           every Journey" at a glance. Stage labels (Researching,
+           Interviewing, Offer Received) stay English in both locales,
+           matching the app's own pipeline vocabulary. -->
       <div class="hero-visual" aria-hidden="true">
         <div class="app-preview">
           <div class="app-preview-chrome">
@@ -40,8 +48,8 @@ const description = "Gidsly is the career companion that gets better at helping 
           </div>
           <div class="app-preview-body">
             <div class="app-preview-head">
-              <h4>Journeys</h4>
-              <span>3 active</span>
+              <h4>{t.mockup.heading}</h4>
+              <span>{t.mockup.active}</span>
             </div>
             <div class="app-row">
               <div class="app-avatar">P</div>
@@ -75,28 +83,28 @@ const description = "Gidsly is the career companion that gets better at helping 
 
   <!-- FEATURES ────────────────────────────────────────────── -->
   <section class="features" id="features">
-    <p class="section-eyebrow">What Gidsly does</p>
-    <h2 class="section-title">Built for the whole Journey.</h2>
+    <p class="section-eyebrow">{t.featuresEyebrow}</p>
+    <h2 class="section-title">{t.featuresTitle}</h2>
     <div class="feat-grid">
       <div class="feat-card">
         <div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="7" width="5" height="14" rx="1"/><rect x="17" y="11" width="4" height="10" rx="1"/></svg></div>
-        <h3 class="feat-title">A pipeline that doesn't forget.</h3>
-        <p class="feat-desc">Every Journey, conversation, and next step in one view. Every stage change is an event you can look back on, not just a number on a dashboard.</p>
+        <h3 class="feat-title">{t.features[0].title}</h3>
+        <p class="feat-desc">{t.features[0].desc}</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9.5 12.5l1.5 1.5 3-3"/></svg></div>
-        <h3 class="feat-title">Documents that land.</h3>
-        <p class="feat-desc">CVs, cover letters, and pitches, tailored for every role you pursue. Gidsly reads the job description and draws on your real experience, always in your voice.</p>
+        <h3 class="feat-title">{t.features[1].title}</h3>
+        <p class="feat-desc">{t.features[1].desc}</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <h3 class="feat-title">A companion for the harder days.</h3>
-        <p class="feat-desc">Interview rehearsal when you're nervous, reflection when you're stuck, and a voice to lean on when the rejection comes, because it will, and that's normal.</p>
+        <h3 class="feat-title">{t.features[2].title}</h3>
+        <p class="feat-desc">{t.features[2].desc}</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
-        <h3 class="feat-title">A network that remembers.</h3>
-        <p class="feat-desc">Contacts and stakeholders linked to the roles they actually touch. Recruiters, hiring managers, warm intros, all surfaced when the right moment comes.</p>
+        <h3 class="feat-title">{t.features[3].title}</h3>
+        <p class="feat-desc">{t.features[3].desc}</p>
       </div>
     </div>
   </section>
@@ -104,21 +112,21 @@ const description = "Gidsly is the career companion that gets better at helping 
   <!-- WHY — warm band, no fake attribution ───────────────── -->
   <div class="why">
     <div class="why-inner">
-      <div class="why-eyebrow">Why Gidsly exists</div>
+      <div class="why-eyebrow">{t.whyEyebrow}</div>
       <p class="why-text">
-        A career decision isn't just a process. It's one of the most human things you'll ever do.
-        <strong>We built Gidsly with that in mind.</strong>
+        {t.whyText}
+        <strong>{t.whyStrong}</strong>
       </p>
     </div>
   </div>
 
   <!-- CLOSING CTA ─────────────────────────────────────────── -->
   <section class="close-cta">
-    <h2 class="close-title">Ready to try Gidsly?</h2>
-    <p class="close-sub">Free to start. Premium at &euro;9.95 per month or &euro;99.50 per year when you're ready for more.</p>
-    <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">Create your account</a>
-    <p class="form-note">No credit card required. Cancel anytime.</p>
+    <h2 class="close-title">{t.closeTitle}</h2>
+    <p class="close-sub">{cc.sub}</p>
+    <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">{cc.cta}</a>
+    <p class="form-note">{cc.note}</p>
   </section>
 
-  <Footer />
+  <Footer locale={locale} />
 </BaseLayout>
