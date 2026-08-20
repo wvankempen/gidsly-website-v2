@@ -50,11 +50,11 @@ try {
 }
 ---
 <BaseLayout title={`${heading}: Gidsly`} description={description} path={path} hasAltLocale={false}>
-  <Header showLangSwitch={false} />
+  <Header />
   <header class="legal-hero">
     <span class="legal-eyebrow">{eyebrow}</span>
     <h1>{heading}</h1>
   </header>
   <article class="legal-article" set:html={bodyHtml} />
-  <Footer />
+  <Footer showLangSwitch={false} />
 </BaseLayout>

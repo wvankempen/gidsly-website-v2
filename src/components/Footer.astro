@@ -7,11 +7,19 @@ import { copy, type Locale } from '../i18n/copy';
 
 interface Props {
   locale?: Locale;
+  /** Locale-agnostic canonical path (e.g. "/", "/pricing") used to build
+   *  the language-switcher targets. Only needed when showLangSwitch is true. */
+  basePath?: string;
+  /** False on the legal pages -- no /nl/ counterpart exists yet. */
+  showLangSwitch?: boolean;
 }
 
-const { locale = 'en' } = Astro.props;
+const { locale = 'en', basePath = '/', showLangSwitch = true } = Astro.props;
 const t = copy[locale].footer;
 const year = new Date().getFullYear();
+
+const enHref = basePath;
+const nlHref = basePath === '/' ? '/nl' : `/nl${basePath}`;
 ---
 <footer>
   <div class="footer-row">
@@ -41,6 +49,12 @@ const year = new Date().getFullYear();
         <a href="/terms">{t.terms}</a>
         <a href="https://gidsly.hyperping.app" target="_blank" rel="noopener noreferrer">{t.status}</a>
         <a href="/subprocessors">{t.subprocessors}</a>
+        {showLangSwitch && (
+          <div class="footer-lang" role="group" aria-label="Language">
+            <a href={enHref} class={locale === 'en' ? 'active' : ''} aria-current={locale === 'en' ? 'true' : undefined} data-lang="en">EN</a>
+            <a href={nlHref} class={locale === 'nl' ? 'active' : ''} aria-current={locale === 'nl' ? 'true' : undefined} data-lang="nl">NL</a>
+          </div>
+        )}
         <span>&copy; {year} Gidsly</span>
       </div>
     </div>
@@ -49,3 +63,16 @@ const year = new Date().getFullYear();
     <p class="footer-note">{t.note}</p>
   </div>
 </footer>
+
+{showLangSwitch && (
+  <script is:inline>
+    // An explicit click on the language switcher is a stronger signal
+    // than the one-time browser-language redirect in BaseLayout -- record
+    // it so this choice sticks on future visits.
+    document.querySelectorAll('.footer-lang a[data-lang]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        try { localStorage.setItem('gidsly-lang', a.dataset.lang); } catch (e) {}
+      });
+    });
+  </script>
+)}

@@ -56,6 +56,42 @@ const allSchema = [organizationSchema, ...structuredData];
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  {locale === 'en' && hasAltLocale && (
+    <script define:vars={{ nlPath }} is:inline>
+      // One-time, opt-out language redirect: a first-time visitor whose
+      // browser is set to Dutch lands on the /nl equivalent instead of
+      // English. Runs once ever per browser (localStorage flag), never
+      // fires again once a choice -- explicit or implicit -- is recorded,
+      // and only applies to English entry pages that have a real Dutch
+      // counterpart (hasAltLocale). No bot detection needed: this never
+      // touches the response Googlebot fetches -- it's a client-side
+      // redirect after the English page has already served as the
+      // crawlable, canonical version.
+      try {
+        var STORAGE_KEY = 'gidsly-lang';
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          var browserLang = (navigator.language || (navigator.languages && navigator.languages[0]) || '').toLowerCase();
+          if (browserLang.indexOf('nl') === 0) {
+            localStorage.setItem(STORAGE_KEY, 'nl');
+            window.location.replace(nlPath);
+          } else {
+            localStorage.setItem(STORAGE_KEY, 'en');
+          }
+        }
+      } catch (e) {}
+    </script>
+  )}
+  {locale === 'nl' && (
+    <script is:inline>
+      // Landing on a Dutch URL directly (shared link, search result) is
+      // itself a signal -- record it so a later visit to an English entry
+      // page doesn't get auto-redirected away from a choice already made.
+      try {
+        if (!localStorage.getItem('gidsly-lang')) localStorage.setItem('gidsly-lang', 'nl');
+      } catch (e) {}
+    </script>
+  )}
   <title>{title}</title>
   <meta name="description" content={description} />
 

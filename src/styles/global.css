@@ -333,6 +333,20 @@ footer { border-top: 1px solid rgba(28, 69, 56, 0.08); padding: 2.5rem 0 3rem; c
 }
 .footer-social a:hover { color: var(--green); background: rgba(28, 69, 56, 0.06); transform: translateY(-1px); }
 .footer-social svg { width: 17px; height: 17px; display: block; }
+.footer-lang {
+  display: inline-flex; align-items: center; gap: 2px;
+  padding: 3px; border-radius: 999px;
+  background: rgba(28, 69, 56, 0.06);
+}
+.footer-lang a {
+  padding: 0.2rem 0.65rem; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.02em;
+  color: var(--muted); text-decoration: none;
+  transition: color .2s, background .2s;
+}
+.footer-lang a:hover { color: var(--green); }
+.footer-lang a.active { background: var(--green); color: #f5e3cc; }
+.footer-lang a.active:hover { color: #f5e3cc; }
 .footer-note { margin-top: 1.2rem; font-size: 0.72rem; color: var(--muted-2); }
 .footer-bottom-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem; }
 

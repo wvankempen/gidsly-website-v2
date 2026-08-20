@@ -28,7 +28,6 @@ export const copy = {
       about: 'About',
       login: 'Log in',
       signup: 'Sign up',
-      langSwitchLabel: 'NL',
     },
     footer: {
       privacy: 'Privacy',
@@ -165,7 +164,6 @@ export const copy = {
       about: 'Over ons',
       login: 'Inloggen',
       signup: 'Aanmelden',
-      langSwitchLabel: 'EN',
     },
     footer: {
       privacy: 'Privacy',

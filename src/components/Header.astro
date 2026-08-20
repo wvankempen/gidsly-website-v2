@@ -5,20 +5,13 @@ import { copy, type Locale } from '../i18n/copy';
 
 interface Props {
   locale?: Locale;
-  /** Locale-agnostic canonical path (e.g. "/", "/pricing") used to build
-   *  the language-switcher target. Only needed when showLangSwitch is true. */
-  basePath?: string;
-  showLangSwitch?: boolean;
 }
 
-const { locale = 'en', basePath = '/', showLangSwitch = true } = Astro.props;
+const { locale = 'en' } = Astro.props;
 const t = copy[locale].nav;
 
 const home = locale === 'nl' ? '/nl' : '/';
 const localize = (p: string) => (locale === 'nl' ? (p === '/' ? '/nl' : `/nl${p}`) : p);
-const switchHref = locale === 'nl'
-  ? basePath
-  : (basePath === '/' ? '/nl' : `/nl${basePath}`);
 ---
 <nav>
   <a href={home} class="brand" aria-label="Gidsly home">
@@ -34,7 +27,6 @@ const switchHref = locale === 'nl'
       <a href={localize('/how-it-works')} class="nav-login">{t.howItWorks}</a>
       <a href={localize('/pricing')} class="nav-login">{t.pricing}</a>
       <a href={localize('/about')} class="nav-login">{t.about}</a>
-      {showLangSwitch && <a href={switchHref} class="nav-login nav-lang">{t.langSwitchLabel}</a>}
       <a href="https://app.gidsly.com/#/auth/signin" class="nav-login">{t.login}</a>
       <a href="https://app.gidsly.com/#/auth/create-account" class="nav-register">{t.signup}</a>
     </div>
