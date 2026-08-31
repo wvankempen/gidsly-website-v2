@@ -1,0 +1,99 @@
+---
+/**
+ * FAQ: /faq (EN) and /nl/faq (NL), same component, locale-switched like
+ * every other page in this repo.
+ *
+ * Three constraints from the brief (Confluence 44302360) shape the markup
+ * and are easy to undo by accident:
+ *
+ * 1. No accordion. Every answer renders expanded. A visitor scanning for
+ *    the privacy answer should not have to click blindly, and collapsed
+ *    content is worth less in search.
+ * 2. Every question is individually linkable. Each `.faq-item` carries a
+ *    stable id, and those ids are IDENTICAL across EN and NL (see the
+ *    `faq` block in i18n/copy.ts), so /faq#email-to-ai and
+ *    /nl/faq#email-to-ai land on the same question in either language.
+ *    Renaming an id breaks links people have already sent each other.
+ * 3. Cluster order is trust, then comparison, then practical. Not
+ *    alphabetical, not by popularity. The trust questions are the actual
+ *    reason someone hesitates, so they come first.
+ *
+ * The privacy-policy link sits once at the foot of the trust cluster
+ * rather than on each of its answers (Willem's call, 2026-08-31).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { copy, type Locale } from '../i18n/copy';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = copy[locale].faq;
+const cc = copy[locale].closeCta;
+const path = locale === 'nl' ? '/nl/faq' : '/faq';
+
+// One FAQPage entity for the whole page, flattened across all three
+// clusters. The clustering is a reading aid for humans; schema.org has no
+// notion of it and Google wants a single mainEntity list.
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: t.clusters.flatMap((cluster) =>
+    cluster.items.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  ),
+};
+---
+<BaseLayout title={t.title} description={t.description} path={path} locale={locale} structuredData={[faqSchema]}>
+  <Header locale={locale} basePath="/faq" />
+
+  <section class="faq-hero">
+    <h1>{t.heroTitle}</h1>
+    <p>{t.heroSub}</p>
+  </section>
+
+  {t.clusters.map((cluster, i) => (
+    <section class="faq-cluster">
+      <p class="section-eyebrow">{cluster.eyebrow}</p>
+      <h2 class="section-title">{cluster.title}</h2>
+
+      <div class="faq-list">
+        {cluster.items.map((item) => (
+          <div class="faq-item" id={item.id}>
+            <h3 class="faq-q">
+              <span>{item.q}</span>
+              <a class="faq-anchor" href={`#${item.id}`} aria-label={t.anchorLabel}>#</a>
+            </h3>
+            <p class="faq-a">{item.a}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Trust cluster only. The other two make no claims the privacy
+          notice governs, so a link there would be noise. */}
+      {i === 0 && (
+        <p class="faq-note">
+          {t.policyNoteBefore}<a href="/privacy">{t.policyNoteLink}</a>{t.policyNoteAfter}
+        </p>
+      )}
+    </section>
+  ))}
+
+  <section class="close-cta">
+    <h2 class="close-title">{t.closeTitle}</h2>
+    <p class="close-sub">{cc.sub}</p>
+    <a href="https://app.gidsly.com/#/auth/create-account" class="btn-primary">{cc.cta}</a>
+    <p class="form-note">{cc.note}</p>
+  </section>
+
+  <ContactForm locale={locale} />
+
+  <Footer locale={locale} basePath="/faq" />
+</BaseLayout>

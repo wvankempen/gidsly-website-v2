@@ -18,6 +18,7 @@ const { locale = 'en', basePath = '/', showLangSwitch = true } = Astro.props;
 const t = copy[locale].footer;
 const year = new Date().getFullYear();
 
+const faqHref = locale === 'nl' ? '/nl/faq' : '/faq';
 const enHref = basePath;
 const nlHref = basePath === '/' ? '/nl' : `/nl${basePath}`;
 ---
@@ -45,6 +46,7 @@ const nlHref = basePath === '/' ? '/nl' : `/nl${basePath}`;
         </a>
       </div>
       <div class="footer-links">
+        <a href={faqHref}>{t.faq}</a>
         <a href="/privacy">{t.privacy}</a>
         <a href="/terms">{t.terms}</a>
         <a href="https://gidsly.hyperping.app" target="_blank" rel="noopener noreferrer">{t.status}</a>

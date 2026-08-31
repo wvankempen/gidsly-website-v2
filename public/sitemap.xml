@@ -22,6 +22,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://gidsly.com/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://gidsly.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -55,6 +60,11 @@
     <loc>https://gidsly.com/nl/how-it-works</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gidsly.com/nl/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://gidsly.com/nl/about</loc>

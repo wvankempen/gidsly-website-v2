@@ -731,6 +731,47 @@ footer { border-top: 1px solid rgba(28, 69, 56, 0.08); padding: 2.5rem 0 3rem; c
 }
 .faq-a { font-size: 0.92rem; color: var(--muted); line-height: 1.6; }
 
+/* ── FAQ page ─────────────────────────────────────────────────
+   The standalone /faq page. Answers are always expanded, never an
+   accordion: a visitor scanning for the privacy answer should not have
+   to click blindly, and collapsed copy is worth less in search. ──── */
+.faq-hero { text-align: center; padding: 2.5rem 0 1rem; }
+.faq-hero h1 {
+  font-family: 'Fraunces', serif; font-weight: 900;
+  font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.08;
+  letter-spacing: -0.02em; color: var(--green); margin-bottom: 1rem;
+}
+.faq-hero p { font-size: 1.05rem; color: var(--muted); max-width: 520px; margin: 0 auto; }
+
+.faq-cluster { max-width: 720px; margin: 0 auto; padding-top: 3rem; }
+.faq-cluster:last-of-type { padding-bottom: 4rem; }
+.faq-cluster .section-title { margin-bottom: 1.5rem; }
+
+/* scroll-margin keeps a question clear of the viewport edge when someone
+   opens a #permalink, which is the whole point of having them. */
+.faq-list .faq-item { scroll-margin-top: 2rem; }
+
+/* .faq-q is a <p> on Pricing and an <h3> here. Same look either way. */
+h3.faq-q { display: flex; align-items: baseline; gap: 0.45rem; }
+
+.faq-anchor {
+  color: var(--muted-2); text-decoration: none; font-weight: 400;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem;
+  opacity: 0; transition: opacity .15s, color .15s;
+}
+.faq-item:hover .faq-anchor,
+.faq-anchor:focus-visible { opacity: 1; }
+.faq-anchor:hover { color: var(--green); }
+
+/* Arriving from a shared link: say so, quietly. */
+.faq-item:target { background: rgba(28, 69, 56, 0.035); }
+.faq-item:target .faq-anchor { opacity: 1; color: var(--green); }
+
+.faq-note { margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); }
+.faq-note a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; font-weight: 500; }
+.faq-note a:hover { color: var(--green-dark); }
+
+
 /* Animations */
 @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
 
@@ -756,6 +797,7 @@ footer { border-top: 1px solid rgba(28, 69, 56, 0.08); padding: 2.5rem 0 3rem; c
   .about-photo { max-width: 220px; margin: 0 auto; }
 }
 @media (max-width: 600px) {
+  .faq-anchor { opacity: 1; }
   .wrapper { padding: 0 1.25rem; }
   .why { padding: 2.5rem 1.5rem; }
   .close-cta { padding: 0 0 3rem; }
