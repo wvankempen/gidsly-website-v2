@@ -744,8 +744,13 @@ footer { border-top: 1px solid rgba(28, 69, 56, 0.08); padding: 2.5rem 0 3rem; c
 .faq-hero p { font-size: 1.05rem; color: var(--muted); max-width: 520px; margin: 0 auto; }
 
 .faq-cluster { max-width: 720px; margin: 0 auto; padding-top: 3rem; }
-.faq-cluster:last-of-type { padding-bottom: 4rem; }
 .faq-cluster .section-title { margin-bottom: 1.5rem; }
+/* Space before the closing CTA. This sits on the CTA rather than on the
+   last cluster because :last-of-type would mean "last <section> on the
+   page", and close-cta and contact-section are both sections that follow
+   it. Without this the last answer's bottom rule runs straight into the
+   CTA heading. */
+.faq-cluster + .close-cta { padding-top: 4.5rem; }
 
 /* scroll-margin keeps a question clear of the viewport edge when someone
    opens a #permalink, which is the whole point of having them. */
